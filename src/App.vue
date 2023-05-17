@@ -14,7 +14,7 @@ const handlerFetch = () => {
   // /test
   instance.get('/test', { needToken: true })
     .then(res => {
-      console.log(res)
+      console.log('123', res)
     })
     .catch((err) => {
       console.error('[error]', err)
@@ -89,6 +89,10 @@ instance.interceptors.response.use(
           .then((response) => {
             console.log('刷新token返回内容', response)
             // todo 这里需要判断刷新请求返回的状态
+            if (response.data.code !== 200) {
+              console.log('刷新token也过期了，重新登录吧！')
+              return response.data
+            }
             localStorage.setItem('token', response.data.data.access_token)
             localStorage.setItem('refresh_token', response.data.data.refresh_token)
             // 处理队列
