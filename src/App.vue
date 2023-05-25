@@ -9,10 +9,10 @@ let pending = []  // 队列
 let isPending = false
 
 const handlerFetch = () => {
-  instance.get('/test', { needToken: true })
+  instance.get('/handlerToken_test', { needToken: true })
 }
 const handlerLogin = () => {
-  instance.post('/login')
+  instance.post('/handlerToken_login')
     .then((response) => {
       if (response.data.code === 20000) {
         localStorage.setItem('token', response.data.data.access_token)
@@ -25,12 +25,12 @@ const handlerLogin = () => {
   // /login
 }
 const handlerRefresh = () => {
-  instance.post('/refresh')
+  instance.post('/handlerToken_refresh')
 }
 
 const refreshToken = () => {
   console.log('请求刷新。。。')
-  return instance.post('/refresh', {
+  return instance.post('/handlerToken_refresh', {
     refresh_token: localStorage.getItem('refresh_token')
   })
 }
